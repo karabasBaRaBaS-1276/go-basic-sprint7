@@ -140,7 +140,8 @@ func TestCafeSearch(t *testing.T) {
 
 		if actual > 0 {
 			for _, cafe := range strings.Split(result, ",") {
-				fmt.Println(cafe)
+				assert.Contains(t, strings.ToUpper(cafe), strings.ToUpper(v.search),
+					"Вариант %d. Сравниваем вхождение подстроки '%s' в строку '%s'", ind, strings.ToUpper(v.search), strings.ToUpper(cafe))
 			}
 		}
 	}
