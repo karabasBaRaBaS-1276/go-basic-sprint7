@@ -96,9 +96,11 @@ func TestCafeCount(t *testing.T) {
 			actual := 0
 			result := strings.TrimSpace(response.Body.String())
 			if result != "" {
-				actual = len(strings.Split(result, ","))
+				assert.Len(t, strings.Split(result, ","), v.want, "Вариант %d. Сравниваем кол-во", ind)
+			} else {
+				assert.Equal(t, v.want, actual, "Вариант %d. Сравниваем кол-во", ind)
 			}
-			assert.Equal(t, v.want, actual, "Вариант %d. Сравниваем кол-во", ind)
+			//assert.Equal(t, v.want, actual, "Вариант %d. Сравниваем кол-во", ind)
 		}
 	}
 }
@@ -134,9 +136,10 @@ func TestCafeSearch(t *testing.T) {
 		actual := 0
 		result := strings.TrimSpace(response.Body.String())
 		if result != "" {
-			actual = len(strings.Split(result, ","))
+			require.Len(t, strings.Split(result, ","), v.wantCount, "Вариант %d. Сравниваем кол-во", ind)
+		} else {
+			require.Equal(t, v.wantCount, actual, "Вариант %d. Сравниваем кол-во", ind)
 		}
-		require.Equal(t, v.wantCount, actual, "Вариант %d. Сравниваем кол-во", ind)
 
 		if actual > 0 {
 			for _, cafe := range strings.Split(result, ",") {
